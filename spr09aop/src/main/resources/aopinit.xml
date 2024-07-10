@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- Target -->
+	<bean id="targetBean" class="pack.MessageImpl">
+		<property name="name" value="김밥밥" />
+	</bean>
+	
+	<!-- Advice(Aspect): Target으로 weaving -->
+	<bean id="myAdvice" class="aspect.MyAdvice" />
+	
+	<!-- proxy 간접 접근: 메소드 호출 또는 공통 기능 등을 수행 -->
+	<!-- 어플리케이션과 AOP 설정을 직접 연계하지 않더라도 유연한 프로그래밍 가능 -->
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<ref bean="targetBean" />
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<!-- 아래 작성한 Advisor를 value로 줌 -->
+				<value>hiAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Advisor (Advice + pointcut)-->
+	<bean id="hiAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice">
+			<ref bean="myAdvice" />
+		</property>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+				<property name="pattern">
+					<value>.*sayHi*</value> <!-- 패키지 위치 무관. 메소드 이름에 sayHi 포함되어있으면 됨 -->
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

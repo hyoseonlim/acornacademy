@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- scope을 "prototype"으로 설정 시 매번 새로운 객체를 만듦. 힙 영역에 여러 개의 인스턴스가 생성됨 -->
+	<bean id="msgImpl" class="pack.controller.MessageImpl" scope="singleton"> 
+		<!-- Constructor Injection -->
+		<constructor-arg index="1" type="java.lang.String">
+			<value>반가워요</value>
+		</constructor-arg>
+		<constructor-arg index="0" type="String">
+			<value>안녕하세요</value>
+		</constructor-arg>
+		<constructor-arg index="2" type="int" value="24" />
+		<constructor-arg index="3" type="pack.model.MyInfoInter" ref="aboutme" />
+		<!-- Setter Injection -->
+		<property name="spec">
+			<value>Java 개발 전문</value>
+		</property>	
+		<property name="outFileInter">
+			<ref bean="outFileImpl" />
+		</property>
+	</bean>
+	
+	<bean id="myInfoImpl" name="myInfo, aboutme, aboutMe" class="pack.model.MyInfoImpl"></bean>
+	
+	<bean id="outFileImpl" class="pack.other.OutFileImpl">
+		<property name="filePath" value="C:/work2/message.txt" />
+	</bean>
+	
+</beans>

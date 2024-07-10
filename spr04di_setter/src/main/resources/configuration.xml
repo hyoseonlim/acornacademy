@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 모든 설정을 자바코드로 부터 분리, 외부화한다. 혹은 annotation을 사용해 자바코드내에서 DI 설정을 할 수도 있다. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 방법 1: 일반적인 setter 사용 -->
+	<!--  
+	<bean id="myProcess" class="pack.MyProcess"> // argument 없는 생성자를 부름. Myprocess myprocess = new MyProcess() 의미
+		<property name="age" value="25" /> // setAge()를 호출
+		<property name="name" value="김순덕" /> // setName()을 호출
+		<property name="showData" ref="showData"></property> // 위처럼 value로 설정 불가능. 아래 코드에서 별도의 객체를 만들어 해당 id, 즉 주소를 참조
+	</bean>
+	<bean id="showData" class="pack.ShowData" /> // 위치는 상관없다.
+	-->
+	
+	<!-- 방법 2: 일반적인 setter 사용 -->
+	<!-- 
+	<bean id="myProcess" class="pack.MyProcess">
+		<property name="age">
+			<value>26</value>
+		</property>
+		<property name="name">
+			<value>공기밥</value>
+		</property>
+		<property name="showData">
+			<bean class="pack.ShowData" />
+		</property>	
+	</bean>
+	-->
+	
+	<!-- 방법 3: XML namespace로 setter 사용. 5번째 줄에 p 추가했음 -->
+	<bean id="myProcess" class="pack.MyProcess"
+		p:age="25"
+		p:name="주먹밥"
+		p:showData-ref="showData"
+	 />
+	<bean id="showData" class="pack.ShowData" />
+		
+</beans>
