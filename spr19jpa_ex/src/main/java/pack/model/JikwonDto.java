@@ -16,8 +16,8 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @Entity
-@Table(name="jikwon")
-public class JikwonDto {
+@Table(name="jikwon") // 물리적인 테이블
+public class JikwonDto { // JPA에서 논리적인 테이블로 사용됨
 	@Id
 	private String jikwon_no;
 	

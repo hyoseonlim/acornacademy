@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -51,9 +53,17 @@ public class DataImpl implements DataInterface{
 			*/
 			
 //			부분 자료 읽기
-			System.out.println("부분 자료 읽기 (단일 엔티티) find() 메소드 사용");
-			MemDto mdto = em.find(MemDto.class, 1); // find(Class<T> entityClass, Object primaryKey)
-			System.out.println(mdto.getNum() + " " + mdto.getName() + " " + mdto.getAddr());
+			System.out.println("부분 자료 읽기 (단일 엔티티) find 메소드 사용");
+			MemDto mdto1 = em.find(MemDto.class, 1); // find(Class<T> entityClass, Object primaryKey)
+			System.out.println(mdto1.getNum() + " " + mdto1.getName() + " " + mdto1.getAddr());
+			
+			System.out.println("부분 자료 읽기 (복수 엔티티) findByAddr 메소드 사용");
+			List<MemDto> partList = findByAddr(em, "강남");
+			for(MemDto m : partList) {
+				System.out.println(m.getNum() + " " + m.getName() + " " + m.getAddr());
+			}
+			// Hibernate: SELECT m FROM MemDto m WHERE m.addr LIKE : str 
+			// 실제 SQL 처리: select memdto0_.num as num1_0_, memdto0_.addr as addr2_0_, memdto0_.name as name3_0_ from mem memdto0_ where memdto0_.addr like ?
 			
 //			전체 자료 읽기
 			System.out.println("전체 자료 읽기 (JPQL 사용)");
@@ -76,6 +86,17 @@ public class DataImpl implements DataInterface{
 		}
 		return list;	
 	}
+	
+	public List<MemDto> findByAddr(EntityManager em, String str){
+		// addr 필드가 특정 접두사로 시작하는 레코드 읽기
+		String jpql = "SELECT m FROM MemDto m WHERE m.addr LIKE : str";
+		// TypedQuery<entity> query = em.createQuery(jpql, entity 클래스)
+		// : JPQL을 작성하고 실행하는 역할
+		TypedQuery<MemDto> query = em.createQuery(jpql, MemDto.class);
+		query.setParameter("str", str + "%"); // SQL의 LIKE 연산 수행 // 큰따옴표 왜 해 ?
+		return query.getResultList();
+	}
+	
 
 	public<T> List<T> findAll(EntityManager em, Class<T> cla){
 		// JPQL

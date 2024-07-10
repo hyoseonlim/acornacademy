@@ -25,14 +25,14 @@ public class BusinessImpl implements BusinessInter{
 	
 	public void printJikwonCntByBuser() {
 		// 부서별 인원 수
-		List<Object[]> result = dataInterface.selectAllBuser();
+		List<Object[]> result = dataInterface.selectCount();
 		System.out.println("\n🐧 부서별 인원수 🐵");
 		
 		// List 객체인 result에 담긴 Object[]에서 0번째 인덱스인 부서번호, 1번째 인덱스인 직원 수를 출력
-		for(Object[] o : result) {
-			String buserNum = (String)o[0];
-			Long cntJikwon = (Long)o[1];
-			System.out.println(buserNum + ": " + cntJikwon);
+		for(Object[] objArray : result) {
+			String buserNum = (String)objArray[0];
+			Long cntJikwon = (Long)objArray[1];
+			System.out.println(buserNum + "번 부서: " + cntJikwon + "명");
 		}
 	}
 }

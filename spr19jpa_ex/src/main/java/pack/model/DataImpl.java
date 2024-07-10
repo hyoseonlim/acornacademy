@@ -24,7 +24,7 @@ public class DataImpl implements DataInter{
 	}
 	
 	@Override
-	public List<Object[]> selectAllBuser() {
+	public List<Object[]> selectCount() {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 		EntityManager em = emf.createEntityManager();
 		
