@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 일반 html 파일은 static에 넣기 -->
+<!-- templates 폴더는 WEB-INF처럼 클라이언트가 호출 불가능하기 때문 -->
+<h1> 🧸🌷</h1>
+
+<h2>🎵 1st Controller와 Mapping</h2>
+<form name="f1"></form>
+<script>
+function func1(){
+         f1.action="test1"; 
+         f1.method="post";  //POST방식
+         f1.submit();
+}
+</script>
+
+<form name="f2"></form>
+<script>
+function func2(){
+         f2.action="test2"; 
+         f2.method="post";  //POST방식
+         f2.submit();
+}
+</script>
+
+<a href="test1">Controller 만나기 1️⃣ GET</a><br>
+<a href="javascript:func1();">Controller 만나기 1️⃣ POST</a><br>
+<a href="test2">Controller 만나기 2️⃣ GET</a><br>
+<a href="javascript:func2();">Controller 만나기 2️⃣ POST</a><br>
+<a href="test3">Controller 만나기 3️⃣</a><br>
+<a href="test4">Controller 만나기 4️⃣</a><br>
+<hr>
+<form action="test5" method="post">
+	<input type="submit" value="Controller 만나기 5️⃣">
+</form>
+<br>
+<form action="test6" method="post">
+	<input type="submit" value="Controller 만나기 6️⃣">
+</form>
+<br>
+<form action="test7" method="post">
+	<input type="submit" value="Controller 만나기 7️⃣">
+</form>
+<hr>
+<a href="test8">Controller 만나기 8️⃣: 데이터 얻기</a><br>
+<a href="test8_1">Controller 만나기 8️⃣: 데이터 얻기 (DTO 객체를 JSON type으로 반환할게)</a><br>
+
+
+<hr>
+<h2>🎵 2nd Controller와 Mapping</h2>
+<form action="test9" method="post">
+	<input type="submit" value="Controller 만나기 9️⃣ GET">
+</form>
+<form action="test9" method="post">
+	<input type="submit" value="Controller 만나기 9️⃣ POST">
+</form>
+
+<hr>
+<h2>🎵 3rd Controller와 Mapping</h2>
+<a href="/java/korea">Controller 만나기 🔟 - korea</a><br>
+<a href="/java/good">Controller 만나기 🔟 - good</a><br>
+<a href="nice">Controller 만나기 🔟 - nice</a><br>
+<a href="ok">Controller 만나기 🔟 - ok</a><br>
+</body>
+</html>
