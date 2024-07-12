@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- 순수 HTML이 아닌 template engine으로 변경. 클라이언트가 해석 불가능 -->
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>타임리프 연습장</h2>
+<h4>th:text</h4>
+메시지1: <i th:text="${msg}" >이 영역의 텍스트는 순수 HTML에만 표시</i><br><br>
+<!-- span 태그 내에 msg가 출력되며, 이미 써둔 저 글은 tool tip -->
+<!-- 서버가 클라이언트로 push -->
+<!-- 타임리프가 수행되지 않으면 안에 쓴 거 -->
+
+메시지2: <b th:text="${msg2}" >두번째 메시지</b><br>
+메시지2: <b>[[${msg2}]]</b> (Inline 처리: 대괄호 두 번 써서 줬어)<br><br>
+
+값 결합(문자열 더하기): <span th:text="'룰루랄라 ' + ${msg2} + ' 랄라룰루'"></span><br>
+값 결합(리터럴 치환): <span th:text="|룰루랄라 ${msg2} 랄라룰루|"></span><br><br>
+
+<hr>
+<h4>th:with="변수명=값,..."</h4>
+✔️ 산술 연산 (지역 변수 처리):<br>
+<span th:with="kor=90,eng=80">
+	<i th:text="|${kor} + ${eng} = ${kor + eng}|">변수는 ${} 내에서만 유효</i>
+</span><br><br>
+
+✔️ 관계 연산:<br>
+<span th:text="3>=4"></span><br>
+<span th:text="3<=4"></span><br>
+<span th:text="a>b"></span><br>
+<span th:text="a==b"></span><br>
+<span th:text="a!=b"></span><br><br>
+
+✔️ 조건 연산:<br>
+<span th:text="5>4 ? 'YES' : 'NO' ">삼항 연산</span>
+<br>
+조건연산(true). else는 없고 unless가 있음:
+<span th:if="5 > 4">
+	조건이 참일 때 수행
+</span><br>
+<span th:unless="5 == 4">
+	조건이 거짓일 때 수행
+</span><br>
+✔️ switch 조건문:<br>
+<div th:switch="${msg}">
+	<!-- 문자열 더하기 대신 escape 문자인 |을 통해 리터럴로 치환하자 -->
+	<b th:case="|Java 만세!🎉|" th:text="|당연히 ${msg}|"></b>
+	<i th:case="|Thymeleaf 만세!🎉|" th:text="|결국 ${msg}|"></i>
+	<strong th:case="*">그 외 메시지군요 (어떤 값도 매칭되지 않을 때)</strong>
+</div>
+
+<hr>
+상품 객체 출력: 객체명.getter / 객체명['getter']<br>
+<div th:text="${product1.code}"></div>
+<div th:text="${product1['su']}"></div>
+<div th:text="${product1.sang}"></div>
+<div th:text="${product1['price']}"></div>
+<br>
+객체 참조 기법(th:object): <br>
+<div th:object="${product2}">
+	<span th:text="*{code}">자식 요소에서 *{필드명(정확히는 getter)}</span>
+	<span th:text="*{sang}"></span>
+	<span>[[*{su}]]</span>
+	<span>[[*{['price']}]]</span>
+</div><br>
+
+<p th:text="${list[0]}"></p>
+<p th:text="${list[1]}"></p>
+반복 처리(th:each. 자바의 enhanced for문같앙): <br>
+<table border="1">
+	<tr>
+		<th>코드</th><th>품명</th><th>수량</th><th>가격</th>
+	</tr>
+	<tr th:each="p:${list}">
+		<td>[[*{p.code}]]</td>
+		<td>[[*{p.sang}]]</td>
+		<td>[[*{p.su}]]</td>
+		<td>[[*{p.price}]]</td>
+	</tr>
+</table>
+</body>
+</html>

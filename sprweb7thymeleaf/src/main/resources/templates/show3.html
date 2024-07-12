@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>🏴‍☠️여러 개의 상품 자료 출력🏴‍☠️</h2>
+<h4>🫧 if, switch 연습 🫧</h4>
+if
+<table border="1">
+	<tr>
+		<th bgcolor="lavender">Index</th><th>Count</th><th>.</th><th>id</th><th>Status</th>
+	</tr>
+	<tr th:each=dto,status:${dtos}> <!-- iterationStatus를 status라는 이름의 변수로 받음 -->
+		<td bgcolor="lavender" th:text=${status.index}></td> <!-- iterationStatus의 index는 0부터 시작 -->
+		<td th:text=${status.count}></td> <!-- iterationStatus의 count는 1부터 시작 -->
+		<td th:if="${status.odd}" th:text="홀"></td> <!-- iterationStatus의 count를 받음 -->
+		<td th:unless="${status.odd}" th:text="짝"></td>
+		<td th:text=${dto.id}></td>
+		<td th:text=${status}></td>
+	</tr>
+</table><br><br>
+
+switch
+<table border="1">
+	<tr>
+		<th>Count</th><th>Count</th><th>id</th><th>상품명</th><th>등록일</th>
+	</tr>
+	<tr th:each=dto,status:${dtos}>
+	<td th:text=${status.count}></td> <!-- iterationStatus의 count는 1부터 시작 -->
+		<td th:switch="${status.even}">
+			<span th:case=true>짝수</span>
+			<span th:case=false>홀수</span>
+		</td>
+		<td th:text=${dto.id}></td>
+		<td th:text=${dto.name}></td>
+		<td th:text=${dto.regDate}></td>
+	</tr>
+</table>
+
+<hr>
+링크 처리<br>
+<!-- <a href="/thleaf/ex1">show1로 이동</a> 을 Thymeleaf의 ns 쓰기 -->
+<a th:href="@{/thleaf/ex1}">show1로 이동</a><br>
+<a th:href="@{https://blog.naver.com/hyoseonee0729}">내 블로그로 이동</a><br>
+<a th:href="@{/thleaf/ex4(param1='금요일',param2='반가워')}">show4로 이동</a><br>
+</body>
+</html>
