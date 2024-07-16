@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>상품 목록(@MVC: 전통적 방법)</h3>
+<th:block th:if="${datas.size > 0}"> <!-- datas 크기가 0보다 클 때만 아래 요소들을 보여줌 -->
+<table border="1">
+		<tr>
+			<th>코드</th><th>품명</th><th>수량</th><th>단가</th>
+		</tr>
+		<tr th:each="data:${datas}"> <!-- data라는 이름으로 datas 요소를 하나씩 받기 -->
+			<td th:text="${data.code}">코드 출력</td>
+			<td>[[${data.sang}]]</td>
+			<td>[[${data.su}]]</td>
+			<td>[[${data.dan}]]</td>
+		</tr>
+	</th:block>
+</table>
+</body>
+</html>

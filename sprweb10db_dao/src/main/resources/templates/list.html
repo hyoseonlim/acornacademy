@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>💞 회원 정보(@MVC - JdbcDaoSupport 사용) 💞</h3>
+
+<th:block th:if="${list.size > 0}">
+<table border="1">
+	<tr style="background-color: pink">
+		<th>아이디</th><th>회원명</th>
+	</tr>
+	<tr th:each="member:${list}">
+		<td>[[${member.id}]]</td>
+		<td>[[${member.name}]]&nbsp;<a th:href="@{detail(id=${member.id})}">상세보기</a></td>
+	</tr>
+</table>
+</th:block><br>
+
+<!-- <a href="insert">회원 추가</a>을 아래 thymeleaf 방식으로도 작성 가능 -->
+<a th:href="@{insert}">회원 추가</a> <!-- 서버 사이드에서 수행되는 템플릿 엔진. 즉 서버에서 해석해서 위처럼 바꿔서 클라이언트 브라우저에 던지는 거얌 -->
+
+</body>
+</html>
