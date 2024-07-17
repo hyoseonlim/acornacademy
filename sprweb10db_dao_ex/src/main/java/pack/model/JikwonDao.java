@@ -20,19 +20,14 @@ public class JikwonDao extends JdbcDaoSupport {
 	// 해당 직급의 직원 읽기
 	public List<JikwonDto> getJikwonList(String jik){
 		String sql = "select * from jikwon where jikwon_jik = ?";
-		Object[] param = {jik};
-		List<JikwonDto> list = getJdbcTemplate().query(sql, param, new RowMapper<JikwonDto>(){
-			@Override
-			public JikwonDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-				JikwonDto dto = new JikwonDto();
-				dto.setNo(rs.getString("jikwon_no"));
-				dto.setName(rs.getString("jikwon_name"));
-				dto.setGen(rs.getString("jikwon_gen"));
-				dto.setPay(rs.getString("jikwon_pay"));
-				return dto;
-			}
+		List<JikwonDto> list = getJdbcTemplate().query(sql, new Object[]{jik}, (ResultSet rs, int rowNum) -> {
+			JikwonDto dto = new JikwonDto();
+			dto.setNo(rs.getString("jikwon_no"));
+			dto.setName(rs.getString("jikwon_name"));
+			dto.setGen(rs.getString("jikwon_gen"));
+			dto.setPay(rs.getString("jikwon_pay"));
+			return dto;
 		});
-		
 		return list;
 	}
 }

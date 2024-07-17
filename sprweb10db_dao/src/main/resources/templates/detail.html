@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>templates/detail.html</title>
+</head>
+<body>
+<h3>💞 상세보기 (@MVC - JdbcDaoSupport 사용) 💞</h3>
+
+<th:block th:if="${member != null}">
+아이디: <b>[[${member.id}]]</b><br>
+회원명: <b>[[${member.name}]]</b><br>
+비밀번호: <b>[[${member.passwd}]]</b><br>
+등록일: <b>[[${member.reg_date}]]</b><br>
+
+</th:block><br>
+<a th:href="@{/list}">목록</a>&nbsp;&nbsp;
+<a th:href="@{/update(id=${member.id})}">수정</a>&nbsp;&nbsp;
+<a th:href="@{/delete(id=${member.id})}">삭제</a>&nbsp;&nbsp;
+
+</body>
+</html>
