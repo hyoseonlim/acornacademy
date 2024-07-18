@@ -21,7 +21,7 @@ public class InsertController {
 	}
 	
 	@PostMapping("insert")
-	public String insertProcess(MemberBean bean) { // MemberBean이 자동으로 어쩌ㅜ구
+	public String insertProcess(MemberBean bean) { // MemberBean이 자동으로 어쩌구
 		memberDao.insData(bean);
 		return "redirect:/list"; // 클라이언트를 거쳐야 *추가 후* 목록 보기 가능
 	}

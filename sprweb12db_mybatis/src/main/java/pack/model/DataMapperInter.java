@@ -11,14 +11,14 @@ import org.apache.ibatis.annotations.Delete;
 import pack.controller.MemBean;
 
 @Mapper
-public interface DataMappingInter { // < 마커 인터페이스 >
-	@Select("select num, name, addr from mem")
+public interface DataMapperInter { // < 마커 인터페이스 >
+	@Select("select num, name, addr from mem") // MyBatis의 어노테이션
 	List<MemDto> selectAll();
 	
 	@Select("select num, name, addr from mem where num=#{num}")
-	List<MemDto> selectPart(String num);
+	MemDto selectOne(String num);
 	
-	@Insert("insert into mem")
+	@Insert("insert into mem values(#{num},#{name},#{addr})")
 	int insertData(MemBean bean);
 	
 	@Update("update mem set name=#{name}, addr=#{addr} where num=#{num}")
