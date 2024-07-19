@@ -6,15 +6,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "product")
 public class ProductVo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-	private int code; // @Column(name="실제컬럼명")
+	private Integer code; // @Column(name="실제컬럼명")
 	
 	@Column(name = "sang", nullable = true, length = 20)
 	private String sang;

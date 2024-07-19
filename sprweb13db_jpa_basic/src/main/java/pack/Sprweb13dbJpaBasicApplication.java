@@ -28,7 +28,7 @@ public class Sprweb13dbJpaBasicApplication {
 	
 	private void myExecute() {
 		System.out.println("독립적인 프로그램으로 실행");
-		//insData();
+		insData();
 		//delData();
 		selectData();
 		class1.abc();
@@ -43,21 +43,24 @@ public class Sprweb13dbJpaBasicApplication {
 		
 		// 1개 레코드 읽기
 		System.out.println("\n1번 상품만 읽어볼겡");
-		ProductVo p = crudRepository.findById(2).get(); // findById(2).get(): select * from product where code=2를 처리 (Id는 PK를 의미)
+		ProductVo p = crudRepository.findById(1).get(); // findById(2).get(): select * from product where code=2를 처리 (Id는 PK를 의미)
 		System.out.println(p.getCode() + " " + p.getSang() + " " + p.getSu() + " " + p.getDan());
 	}
 
 	private void insData() {
 		Scanner sc = new Scanner(System.in);
+		System.out.print("코드: ");
+		int code = sc.nextInt();
 		System.out.print("상품명: ");
 		String sang = sc.next();
 		System.out.print("수량: ");
 		int su = sc.nextInt();
 		System.out.print("단가: ");
 		int dan = sc.nextInt();
-		ProductVo productVo = new ProductVo(null, sang, su, dan);
-		crudRepository.save(productVo); // save: PK 여부 판단 -> 있으면 update/ 없으면 auto_increment로 insert
-		// 질문!!!!!!!!!그럼 auto_increment 조건 필수?
+		ProductVo productVo = new ProductVo(code, sang, su, dan);
+		crudRepository.save(productVo); 
+		// save: PK 여부 판단하여 update/insert 처리
+		// PK가 null일 때, DB에서 auto_increment 설정을 했다면 insert, 안했다면 ERROR
 	}
 	
 	private void delData() {

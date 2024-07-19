@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="product") // 안하면 테이블명 PRODUCT_VO로 만듦
+@Table(name="product2") // 안하면 테이블명 PRODUCT_VO로 만듦
 public class ProductVo { // VO (Value Object)
 	
 	@Id 

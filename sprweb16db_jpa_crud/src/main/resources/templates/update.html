@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>자료 수정</h2>
+<form th:action="@{/update}" method="post" th:object="${mem}"> <!-- object 설정하여 아래에서 *로 받기 -->
+	번호: <b>[[${mem.num}]]</b><br> <!-- <b th:text="${mem.num}">번호</b> -->
+	이름: <input type="text" th:field="*{name}"><br>
+	주소: <input type="text" th:field="*{addr}"><br>
+	<input type="hidden" th:field="*{num}"><br>
+	<input type="submit" value="수정하기">
+	<!-- th:value 대신 th:field로 하면 따로 name 속성 필요없어 -->
+</form>
+</body>
+</html>
