@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pack.model.DataMapInterface">
+	<select id="selectAll" resultType="pack.model.Board">
+	select * from springboard
+	</select>
+	
+	<select id="selectSearch" parameterType="pack.controller.BoardBean" resultType="pack.model.Board">
+	select * from springboard where ${searchName} 
+	like concat('%',#{searchValue},'%')
+	</select>
+	<!-- $, # 구분하기! ${column명}, #{변수명} -->
+	
+	<select id="selectOne" parameterType="String" resultType="pack.model.Board">
+	select * from springboard where num=#{num}
+	</select>
+	
+	<insert id="insert" parameterType="pack.controller.BoardBean">
+	insert into springboard(num,author,title,content) 
+	values((select max(num) + 1 from springboard ali), #{author}, #{title}, #{content}) 
+	</insert>
+	<!-- 서브쿼리로 auto_increment 처리 -->
+	<!-- MySql, MariaDB에서는 같은 테이블을 쓰는 서브쿼리에 Alias가 필수 -->
+	
+	<update id="updateReadcnt" parameterType="String">
+	update springboard set readcnt=readcnt+1 where num=#{num}
+	</update>
+	
+	<update id="update" parameterType="pack.controller.BoardBean">
+	update springboard set title=#{title}, content=#{content} where num=#{num}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+	delete from springboard where num=#{num}
+	</delete>
+</mapper>

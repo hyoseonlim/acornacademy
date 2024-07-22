@@ -9,7 +9,9 @@ public interface MemRepository extends JpaRepository<Mem, Integer>{
 	@Query(value="select max(m.num) from Mem m") // @Query(value="select max(num) from mem", nativeQuery = true)
 	int findByMaxNum();
 	
-	
-	
+	/*
+	@Query("select m from Mem as m where m.num=?1") // plSql. 매핑방법은 두가지(순서/이름)
+	Mem findByNum(String num);
+	*/
 	
 }

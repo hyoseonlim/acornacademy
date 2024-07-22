@@ -16,7 +16,7 @@ import pack.model.Mem;
 public class MemController {
 
 	@Autowired
-	private DataProcess dao;
+	private DataProcess dataProcess;
 	
 	@GetMapping({"/", "start"})
 	public String start() {
@@ -25,7 +25,7 @@ public class MemController {
 	
 	@GetMapping("list")
 	public String list(Model model) {
-		ArrayList<Mem> list = (ArrayList<Mem>)dao.getAllData();
+		ArrayList<Mem> list = (ArrayList<Mem>)dataProcess.getAllData();
 		model.addAttribute("datas",list);
 		return "list";
 	}
@@ -36,26 +36,25 @@ public class MemController {
 	}
 	
 	@PostMapping("insert")
-	public String insert(MemBean bean) {
-		String result = dao.insert(bean);
-		return "";
+	public String insert(MemBean bean, Model model) {
+		return dataProcess.insert(bean) ? "redirect:/list" : "error";
 	}
 	
 	@GetMapping("update")
 	public String updateForm(@RequestParam("num") int num, Model model) {
-		Mem mem = dao.getOneData(num);
+		Mem mem = dataProcess.getOneData(num);
 		model.addAttribute("mem", mem);
 		return "update";
 	}
 	
 	@PostMapping("update")
 	public String update(MemBean bean) {
-		return dao.update(bean) ? "redirect:/list" : "redirect:/error";
+		return dataProcess.update(bean) ? "redirect:/list" : "redirect:/error";
 	}
 	
 	@GetMapping("delete")
 	public String delete(@RequestParam("num") int num, Model model) {
-		return dao.delete(num) ? "redirect:/list" : "redirect:/error";
+		return dataProcess.delete(num) ? "redirect:/list" : "redirect:/error";
 	}
 	
 	@GetMapping("error")
@@ -63,12 +62,4 @@ public class MemController {
 		return "error";
 	}
 	
-	@GetMapping("calc")
-	public String calcPrice(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("quality") String quality, @RequestParam("quantity") int quantity, Model model) {
-		int total = price * quantity;
-		if(quality.equals("상")) total *= 2;
-		model.addAttribute("name", name);
-		model.addAttribute("total", total);
-		return "list1";
-	}
 }
