@@ -22,7 +22,7 @@ public class JikwonDao {
 			if(rating.equals("all")) {
 				jikwonList = dataMapInterface.selectBuserNum(buserNum);
 			} else {				
-				jikwonList = dataMapInterface.selectRaiting(buserNum, rating);
+				jikwonList = dataMapInterface.selectRating(buserNum, rating);
 			}
 		} catch (Exception e) {
 			logger.info("list err : " + e);

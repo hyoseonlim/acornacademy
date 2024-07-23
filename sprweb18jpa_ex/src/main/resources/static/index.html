@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>부서/평가등급별 직원 목록 조회</h2>
+<form action="show" method="post">
+	부서명: 
+	<select name="chosenBuser">
+		<option value="10">총무부</option>
+		<option value="20">영업부</option>
+		<option value="30">전산부</option>
+		<option value="40">관리부</option>
+	</select><br>
+	평가 등급:
+		전체<input type="radio" name="chosenRating" checked="checked" value="all">&nbsp;
+		a<input type="radio" name="chosenRating" value="a">&nbsp;
+		b<input type="radio" name="chosenRating" value="b">&nbsp;
+		c<input type="radio" name="chosenRating" value="c">&nbsp;
+	<br>
+	<input type="submit" value="확인">
+</form>
+</body>
+</html>

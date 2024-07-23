@@ -34,8 +34,5 @@ public class TestController {
 		ArrayList<Sangpum> list = (ArrayList<Sangpum>)dao.getDataSearch(bean.getSearchValue());
 		model.addAttribute("list", list);
 		return "list";
-	}
-	
-	
-	
+	}	
 }

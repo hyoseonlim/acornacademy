@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+[[${buserName}]] 직원:<br>
+<table border="1">
+	<tr>
+		<th>사번</th><th>이름</th><th>직급</th><th>연봉</th><th>평가</th>
+	</tr>
+	<tr th:each="jikwon:${list}">
+		<td>[[${jikwon.no}]]</td>
+		<td>[[${jikwon.name}]]</td>
+		<td>[[${jikwon.jik}]]</td>
+		<td>[[${jikwon.pay}]]</td>
+		<td>[[${jikwon.rating}]]</td>
+	</tr>
+</table>
+
+</body>
+</html>

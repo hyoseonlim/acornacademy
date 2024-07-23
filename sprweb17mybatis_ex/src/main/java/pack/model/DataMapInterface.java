@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Param;
 public interface DataMapInterface {
 	
 	List<Jikwon> selectBuserNum(int buserNum);
-	List<Jikwon> selectRaiting(@Param("buserNum") int buserNum, @Param("rating") String rating);
+	List<Jikwon> selectRating(@Param("buserNum") int buserNum, @Param("rating") String rating);
 
 }
