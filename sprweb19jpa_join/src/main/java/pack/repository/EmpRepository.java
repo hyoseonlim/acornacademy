@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import pack.entity.Emp;
 
+// JpaRepository의 기본제공메소드 / 메소드네이밍룰에 따라 만드는 메소드 / 직접 JPQL 작성해 만드는 메소드 / 직접 네이티브 쿼리 작성해 만드는 메소드
 public interface EmpRepository extends JpaRepository<Emp, Integer>{
 	
 	// 사원번호에 대해 오름차순 정렬된 목록 반환 메소드 (Method Naming Rule 사용)

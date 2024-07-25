@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>🩵 부서정보 열람 🩵</h2>
+부서 번호: <strong th:text="${dto.deptno}">deptno</strong><br>
+부서 이름: <span th:text="${dto.dname}">dname</span><br>
+부서 위치: <span th:text="${dto.loc}">loc</span><br>
+부서 인원: <span th:text="${dto.count}">dname</span><br><br><br> 
+<!-- Entity에서 DTO 변환 메소드에서 count 값 지정해줬어 -->
+
+<h3>🐧🐻‍❄️ 근무자 명단 🐻‍❄️🐧</h3>
+<ul>
+	<li th:each="name:${dto.names}">[[${name}]]</li>
+</ul>
+<a th:href="@{/}">메인화면</a>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+th {
+	text-align: center;
+	background-color: skyblue;
+}
+</style>
+</head>
+<body>
+<h2>🩵 직원목록 🩵</h2>
+<th:block th:if="${list.size > 0}">
+<table border="1">
+	<tr>
+		<th>사번</th><th>이름</th><th>직급</th><th>부서명</th><th>관리고객</th>
+	</tr>
+	<tr th:each="jikwon:${list}">
+		<td th:text="${jikwon.no}">no</td>
+		<td th:if="${jikwon.checkgogek=='0'}"><b><a th:href="@{/glist(no=${jikwon.no})}" th:text="${jikwon.name}">name</a></b></td>
+		<td th:unless="${jikwon.checkgogek=='0'}">[[${jikwon.name}]]</td>
+		<td th:text="${jikwon.jik}">jik</td>
+		<td th:text="${jikwon.busername}">buser.name</td>
+		<td th:text="${jikwon.checkgogek}">glist.size()</td>
+	</tr>
+</table>
+</th:block>
+</body>
+</html>

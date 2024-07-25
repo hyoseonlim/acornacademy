@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import jakarta.transaction.Transactional;
 import pack.dto.MemberDto;
 import pack.entity.Member;
 import pack.repository.MemberRepository;
@@ -70,9 +71,22 @@ public class MemberServiceImpl implements MemberService{
 		repository.save(Member.toEntity(bean));
 	}
 	
+	@Transactional // 이게 있어야 commit됨
 	@Override
 	public void update2(MemberDto bean) {
-
+		// 🌟 1차 캐시로 인한 동일 객체 인스턴스 반환 확인 🌟 (동일한 요청에 대해서는 최초 요청으로 얻어서 저장해둔 정보를 사용)
+		// https://cafe.daum.net/flowlife/HrhB/91
+		// 수정할 회원의 번호를 이용해서 회원 정보 entity 객체 얻어내기
+	    Member m1 = repository.findById(bean.getNum()).get();
+	    Member m2 = repository.findById(bean.getNum()).get();
+	    
+	    // 동일성 검사
+	    boolean isEqual = m1 == m2;
+	    System.out.println("m1과 m2가 같냐? " + isEqual);
+	    
+	    // setter 메소드를 이용해서 이름과 주소 수정하기 (JPARepository의 save메소드 대신)
+	    m1.setName(bean.getName());
+	    m1.setAddr(bean.getAddr());
 	}
 	
 	@Override
