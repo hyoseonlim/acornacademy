@@ -35,7 +35,7 @@ public class Jikwon {
 	@JoinColumn(name="buser_num") // 실제 DB 테이블의 조인할 컬럼명
 	private Buser buser;
 	
-	@OneToMany(mappedBy="jikwon") // 매핑되는 객체 이름? Buser에 있어
+	@OneToMany(mappedBy="jikwon") // Gogek 엔티티의 jikwon 필드를 통해 glist를 매핑
 	@Builder.Default
 	private List<Gogek> glist = new ArrayList<Gogek>();
 }

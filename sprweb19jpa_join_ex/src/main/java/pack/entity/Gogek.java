@@ -30,6 +30,6 @@ public class Gogek {
 	private String tel;
 	
 	@ManyToOne
-	@JoinColumn(name = "gogek_damsano") // 실제 테이블의 조인 컬럼명을 적는다.
-	private Jikwon jikwon;
+	@JoinColumn(name = "gogek_damsano") // 실제 테이블의 조인 컬럼명
+	private Jikwon jikwon; 
 }
