@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<th:block th:if="${list.size > 0}">
+<table>
+	<tr th:each="jikwon:${list}">
+		<td>[[${board.num}]]</td>
+		<td><a th:href="@{/detail(num=${board.num})}" th:text="${board.title}">title</a></td>
+		<td>[[${board.author}]]</td>
+		<td>[[${board.readcnt}]]</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<form th:action="@{/search}" method="post">
+				검색대상
+				<select name="searchOption">
+					<option value="author" selected="selected">작성자</option>
+					<option value="title">글제목</option>
+				</select>&nbsp;
+				검색어 <input type="text" name="searchValue">&nbsp;
+				<input type="submit" value="검색하기">
+			</form>
+		</td>
+	</tr>
+</table>
+</th:block>
+</body>
+</html>

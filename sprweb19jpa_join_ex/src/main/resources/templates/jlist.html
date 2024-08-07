@@ -8,11 +8,14 @@ th {
 	text-align: center;
 	background-color: skyblue;
 }
+body {
+	font-family: 'Kyobo Handwriting 2023 wsa';
+}
 </style>
 </head>
 <body>
 <h2>🩵 직원목록 🩵</h2>
-<th:block th:if="${list.size > 0}">
+
 <table border="1">
 	<tr>
 		<th>사번</th><th>이름</th><th>직급</th><th>부서명</th><th>관리고객</th>
@@ -26,6 +29,6 @@ th {
 		<td th:text="${jikwon.checkgogek}">glist.size()</td>
 	</tr>
 </table>
-</th:block>
+
 </body>
 </html>

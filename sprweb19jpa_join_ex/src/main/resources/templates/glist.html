@@ -8,11 +8,13 @@ th {
 	text-align: center;
 	background-color: skyblue;
 }
+body {
+	font-family: 'Kyobo Handwriting 2023 wsa';
+}
 </style>
 </head>
 <body>
 <h2>🩵[[${jikwon.name}]] [[${jikwon.jik}]]의 관리고객 🩵</h2>
-<th:block th:if="${list.size > 0}">
 <table border="1">
 	<tr>
 		<th>고객번호</th><th>고객명</th><th>성별</th><th>나이</th><th>전화</th>
@@ -25,7 +27,5 @@ th {
 		<td th:text="${gogek.tel}">tel</td>
 	</tr>
 </table>
-인원수: [[${list.size}]]명
-</th:block>
 </body>
 </html>
