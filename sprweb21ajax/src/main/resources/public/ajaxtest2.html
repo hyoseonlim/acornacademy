@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+body {
+	text-align: center;
+	background-color: beige;
+	font-family: "Kyobo Handwriting 2023 wsa";
+}
+</style>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function(){
+	document.querySelector('#showData').innerHTML = "";
+	
+	document.querySelector('#btnSingle').addEventListener("click", function(){
+		fetch('list?name=Tim')
+		.then(response => response.json())
+		.then(data => {
+			let str = data.name + "<br/>";
+			str += data.skills[0] + ", ";
+			str += data.skills[1];
+			document.querySelector('#showData').innerHTML = str;
+		})
+		.catch(() => {
+			document.querySelector('#showData').innerHTML = "<b>에러 발생</b>";
+		})	
+	})
+	
+	document.querySelector('#btnMulti').addEventListener("click", function(){
+		fetch('list2')
+		.then(response => response.json())
+		.then(data => {
+			let str = "<table>"
+			let list = data.datas // datas 라는 이름으로 저장되어있는 데이터 리스트
+			list.forEach(function(objArr){
+				str += "<tr><td>" + objArr["name"] + "</td>";
+				str += "<td>" + objArr.age + "</td></tr>";
+			})
+			str += "</table>"
+			document.querySelector('#showData').innerHTML = str;
+		})
+		.catch(() => {
+			document.querySelector('#showData').innerHTML = "<b>에러 발생</b>";
+		})	
+	})
+})
+</script>
+</head>
+<body>
+<h1>🍄🌷JSON 읽기🍧🧁</h1>
+<h2>🌟 fetch 🌟</h2>
+<button id="btnSingle">한 개 읽기</button>
+<button id="btnMulti">여러 개 읽기</button><br/>
+<hr/>
+<div id="showData"></div>
+</body>
+</html>

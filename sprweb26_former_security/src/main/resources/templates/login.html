@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>SESSION 로그인 연습</h1>
+<h3>🤖🔨 Security를 사용하지 않은 전통적인 방식 🔨🤖</h3>
+<form th:action="@{/login}" method="post">
+	ID: <input type="text" name="userid"><br>
+	PW: <input type="password" name="password"><br>
+	<input type="submit" value="로그인">
+</form>
+
+<b style="color: hotpink;">
+	<th:block th:if="${error}">[[${error}]]</th:block>
+</b>
+</body>
+</html>

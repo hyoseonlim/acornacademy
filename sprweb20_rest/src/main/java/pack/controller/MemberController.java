@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pack.dto.MemberDto;
 import pack.repository.MemberDao;
 
-
 //@Controller
 //@ResponseBody
 // 둘을 합한 게 
@@ -32,7 +31,7 @@ public class MemberController {
 	public List<MemberDto> list() { 
 		//  JSON 형태로 변환해 클라이언트에 반환(JavaScript AJAX 요청)
 		// (기존처럼 HTML 파일로 변환하는 것이 아님)
-		System.out.println("get 요청 했넹 (o゜▽゜)o☆");
+		//System.out.println("get 요청 했넹 (o゜▽゜)o☆");
 		return dao.getList();
 	}
 	

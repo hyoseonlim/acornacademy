@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>🤖 Vue REST 🤖</title>
+<style type="text/css">
+table {
+	width: 90%; border-collapse: collapse;
+}
+th, td {
+	border: 1px solid black; padding: 8px;
+}
+th {
+	background-color: skyblue;
+}
+body {
+	background-color: beige;
+	color: black;
+	font-family: 'Kyobo Handwriting 2023 wsa';
+}
+button {
+	background-color: skyblue;
+	border: 1px solid black;
+}
+</style>
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>🩵 회원 정보 🩵</h2>
+<div id="app">
+<table>
+	<thead>
+		<tr>
+			<th>번호</th><th>이름</th><th>주소</th><th>관리</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr v-for="member in members" :key="member.num"> <!-- :key로 고유키 설정 -->
+			<td>{{member.num}}</td>
+			<td>{{member.name}}</td>
+			<td>{{member.addr}}</td>
+			<td>
+				<button @click="selectMember(member)">수정</button>&nbsp;&nbsp;
+				<button @click="deleteMember(member.num)">삭제</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<h4>🔨  회원 추가 또는 수정 🔨</h4>
+<form @submit.prevent="saveMember">
+	<input v-model="memberForm.name" placeholder="이름 입력" required="required" />&nbsp;
+	<input v-model="memberForm.addr" placeholder="주소 입력" required />&nbsp;
+	<button type="submit">회원 {{memberForm.num ? '수정' : '추가'}}</button>
+	<!-- num 값에 따라 '수정' 또는 '추가' -->
+</form><br/>
+</div>
+
+<script type="text/javascript">
+const {createApp, ref, onMounted} = Vue;
+
+createApp({
+	setup(){
+		// ref - 반응형 데이터로 동작: Vue 컴포넌트에서 변경될 때 자동 추적됨. UI 재렌더링
+		const members = ref([]);
+		const memberForm = ref({num:null, name:'', addr:''});
+		
+		// 자료를 읽는(🌟GET🌟) 비동기 함수 작성 
+		const fetchNumbers = async() => {
+			const response = await axios.get('/members');
+			members.value = response.data;
+		};
+		
+		// 회원정보를 수정(🌟PUT🌟) / 추가(🌟POST🌟)하는 비동기 함수 작성
+		const saveMember = async() => {
+			// num 값이 존재하면 해당 회원 정보 수정, 없으면 회원 추가
+			if(memberForm.value.num){
+				await axios.put(`/members/${memberForm.value.num}`, memberForm.value);  // 백틱에서는 외부값을 $을 써서 참조
+			} else {
+				await axios.post('/members', memberForm.value);
+			}
+			
+			// 입력 자료 지우기
+			memberForm.value = ref({num:null, name:'', addr:''});
+			
+			// 수정 또는 추가 후 목록 보기
+			fetchNumbers();
+		}
+		
+		// 회원 삭제 비동기 함수
+		const deleteMember = async(num) => {
+			await axios.delete(`/members/${num}`);
+			
+			// 삭제 후 목록 보기
+			fetchNumbers();
+		}
+		
+		const selectMember = (member) => {
+			memberForm.value = {...member};
+		}
+		
+		onMounted(fetchNumbers); // 컴포넌트가 Mount 되면 fetchNumbers 호출
+		return {members, memberForm, saveMember, deleteMember, selectMember};
+	}
+}).mount('#app');
+
+</script>
+</body>
+</html>

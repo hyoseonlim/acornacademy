@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>JWT 로그인 연습</h1>
+<form th:action="@{/auth/login}" method="post">
+	ID: <input type="text" name="userid"><br>
+	PW: <input type="password" name="password"><br>
+	<input type="submit" value="로그인">
+</form>
+
+<div th:if="${param.error}">
+	<b style="color: hotpink;">에러 발생</b>
+</div>
+</body>
+</html>
