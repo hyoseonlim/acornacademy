@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+a { 
+    text-decoration: none; /* 모든 a 태그의 밑줄 제거 */
+}
+
+ul {
+    list-style: none; /* 기본 기호 없애기 */
+    padding-left: 0; /* 기본 패딩 없애기 (선택적) */
+}
+
+li::before {
+    content: '🐻‍❄️';
+}
+
+ul li a {
+    color: darkgray;
+}
+</style>
+</head>
+<body>
+<h1>홈 페이지</h1>
+<div sec:authorize="isAuthenticated()"> <!-- Spring Security 의존성 주입 시 타임리프에서 처리 가능 -->
+	<strong sec:authentication="name"></strong>님! 로그인 중<br/>
+	<a th:href="@{/user/logout}">로그아웃</a>
+</div>
+<div sec:authorize="!isAuthenticated()"> <!-- Spring Security 의존성 주입 시 타임리프에서 처리 가능 -->
+	<b>로그인 상태 아님</b><br/>
+	<a th:href="@{/user/loginform}">로그인하기</a>
+</div>
+
+<ul>
+	<li><a th:href="@{/notice}">공지사항 보기 (ALL)</a></li>
+	<li><a th:href="@{/play}">놀이터 (로그인 필요)</a></li>
+	<li><a th:href="@{/shop}">쇼핑하기 (ALL, 상품 구입 시 로그인 필요)</a></li>
+	<li><a th:href="@{/staff/user/list}">회원목록 보기 (STAFF, ADMIN 전용)</a></li>
+	<li><a th:href="@{/admin/user/manage}">회원 관리 (ADMIN 전용)</a></li>
+</ul>
+</body>
+</html>
