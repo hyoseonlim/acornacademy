@@ -5,7 +5,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<strong sec:authentication="name"></strong>님 로그인을 환영해요!
-<a th:href="@{/}">인덱스로 이동</a>
+<h3>주문 결과 페이지</h3>
+<p>
+<strong sec:authentication="name">님의 주문내역</strong>
+<span>[[${msg}]]</span>
+</p>
 </body>
 </html>

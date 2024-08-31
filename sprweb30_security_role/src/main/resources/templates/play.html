@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>어서와 놀이터 페이지</h3>
+<strong sec:authentication="name"></strong>님 재밌게 노세요
+<img src="https://th.bing.com/th/id/OIP.x0Fayg9hQZVrW4cnYNaLKAHaPp?w=115&h=187&c=7&r=0&o=5&dpr=1.1&pid=1.7" /><br/>
+<a th:href="@{/}">인덱스로 이동</a>
+</body>
+</html>

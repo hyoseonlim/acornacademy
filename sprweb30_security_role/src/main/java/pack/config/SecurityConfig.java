@@ -2,8 +2,13 @@ package pack.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -44,5 +49,21 @@ public class SecurityConfig {
 					.expiredUrl("/user/expired")); // 허용되는 세션 개수를 초과하여 로그인이 해제된 경우 redirect할 경로 지정	
 		
 		return security.build();
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	AuthenticationManager authenticationManager(HttpSecurity httpSecurity, UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) throws Exception{
+		
+		AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+		authenticationManagerBuilder
+			.userDetailsService(userDetailsService)
+			.passwordEncoder(bCryptPasswordEncoder);
+		return authenticationManagerBuilder.build();
+		
 	}
 }

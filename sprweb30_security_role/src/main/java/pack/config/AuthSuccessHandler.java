@@ -1,9 +1,6 @@
-/*
-👨🏻💬 https://cafe.daum.net/flowlife/HrhB/96
-
-SecurityConfig 클래스에서 http.formLogin().successHandler(new CustomAuthenticationHandler())로 설정
-*/
 package pack.config;
+// 👨🏻💬 https://cafe.daum.net/flowlife/HrhB/96
+// SecurityConfig 클래스에서 http.formLogin().successHandler(new CustomAuthenticationHandler())로 설정
 
 import java.io.IOException;
 
