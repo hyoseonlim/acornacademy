@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Chat Application</title>
+<!-- SockJS와 STOMP 라이브러리 읽기용 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .container {
+        width: 80%;
+        max-width: 600px;
+        margin-top: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .input-container {
+        display: flex;
+        align-items: center;
+    }
+    #message {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #msgArea {
+        list-style-type: none;
+        padding: 0;
+        margin: 20px 0 0 0;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    #msgArea li {
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #e1ffc7;
+        border: 1px solid #b4e2a1;
+        margin-bottom: 10px;
+        position: relative;
+        max-width: 80%;
+        word-wrap: break-word;
+        clear: both;
+    }
+    /* 좌측 정렬 말풍선 */
+    .left {
+        background-color: #e1ffc7;
+        border-color: #b4e2a1;
+        margin-right: auto;
+        margin-left: 0;
+    }
+    .left::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: -15px;
+        width: 0;
+        height: 0;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #e1ffc7 transparent transparent transparent;
+    }
+    /* 우측 정렬 말풍선 */
+    .right {
+        background-color: #cfe9ff;
+        border-color: #a5c2e6;
+        margin-left: auto;
+        margin-right: 0;
+    }
+    .right::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: -15px;
+        width: 0;
+        height: 0;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #cfe9ff transparent transparent transparent;
+    }
+</style>
+<script type="text/javascript">
+let stompClient = null;
+
+function connect(){
+    let socket = new SockJS('/ws'); // /ws 엔드포인트를 통해 WebSocket 연결객체를 생성
+    stompClient = Stomp.over(socket); // 클라이언트가 WebSocket 연결을 통해 Stomp를 사용할 수 있도록 설정
+
+    // 연결 성공 시 콜백 함수 호출
+    stompClient.connect({}, function(frame){  // frame: command, header, body 로 구성
+        console.log('connected : ' + frame);
+        // 메세지를 수신(구독)할 클라이언트는 서버가 해당 경로에 브로드캐스트한 메세지를 모두 수신 가능
+        // 한 명의 클라이언트가 메세지를 전송하면 접속된 모든 클라이언트가 이를 수신 가능
+        stompClient.subscribe('/topic/messages', function(message){ // '/topic/messages'로 수신된 메세지를 처리
+            showMessage(message.body);
+        });
+    });
+}
+
+function sendMessage(){ // 클라이언트가 입력한 메세지를 '/app/message'로 전송
+    let msgContent = document.querySelector("#message").value;
+    if (msgContent.trim() !== "") { // 공백 메시지 방지
+        stompClient.send('/app/message', {}, msgContent); // send(메세지목적지,메세지헤더,메세지내용(payload)) - 채팅 메세지, 데이터 갱신 요청, 좋아요 요청 등을 서버로 전달하는데 사용
+        document.querySelector("#message").value = ""; // 메시지 전송 후 입력 필드 비우기
+    }
+}
+
+function showMessage(message){
+    // 수신된 메세지 출력
+    let msgElement  = document.createElement("li");  // DOM 기술 사용
+    
+    // 단순히 메시지를 테스트하기 위해 좌측/우측 메시지 분리. 실제로는 서버에서 메시지 유형을 구분하거나 사용자에 따라 다르게 설정할 수 있습니다.
+    let isSentByCurrentUser = Math.random() > 0.5; // 임시로 50% 확률로 사용자 메시지와 다른 사용자 메시지를 구분
+
+    msgElement.textContent = message;
+    msgElement.className = isSentByCurrentUser ? 'right' : 'left'; // 조건에 따라 클래스 변경
+    document.querySelector("#msgArea").appendChild(msgElement);
+    
+    // 메시지 리스트 스크롤을 항상 가장 최근 메시지로 이동
+    document.querySelector("#msgArea").scrollTop = document.querySelector("#msgArea").scrollHeight;
+}
+
+window.onload = function(){
+    connect();
+}
+</script>
+</head>
+<body>
+<div class="container">
+    <div class="input-container">
+        <input type="text" id="message" placeholder="메세지 입력" onkeydown="if(event.keyCode == 13) sendMessage()" />
+        <button onclick="sendMessage()">전 송</button>
+    </div>
+    <ul id="msgArea"></ul>
+</div>
+</body>
+</html>
